@@ -8,7 +8,7 @@ FROM node:current-alpine
 # RUN apt-get update
 RUN echo "http://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories
 RUN apk update && apk upgrade
-RUN apk add --no-cache fish git wget curl
+RUN apk add --no-cache fish nano
 #nodeJS降级
 RUN npm install -g n && \
     # n 12.13.0 && \
@@ -31,6 +31,7 @@ RUN npm install -g n && \
 #    && npm install \
 #    && npm run init
 
+USER node
 VOLUME ["/home/node"]
 EXPOSE 8080 443
 WORKDIR /home/node
