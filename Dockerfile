@@ -12,9 +12,10 @@ RUN npm install -g n && \
     # n 12.13.0 && \
     npm install cnpm -g
 # eggjs 脚本执行
-#RUN npm install apidoc -g  \
-    #&& npm install gulp -g  \
-    #&& npm install egg-scripts -g
+RUN cnpm install apidoc -g  \
+    && cnpm install gulp -g  \
+    && cnpm install egg-scripts -g 
+
 #下载
 # RUN cd /home \
 #     && git clone https://github.com/doramart/DoraCMS.git \
