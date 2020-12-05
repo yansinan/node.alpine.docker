@@ -1,12 +1,14 @@
 #第一行必须指令基于的基础镜像
-#FROM node:10.16.3-alpine
-FROM arm32v6/node:current-alpine
+# for pi0 use this
+#FROM arm32v6/node:current-alpine
+# for x86 & x64
+FROM node:current-alpine
 #维护者信息 dr
 #镜像的操作指令
 # RUN apt-get update
 RUN echo "http://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories
 RUN apk update && apk upgrade
-RUN apk add --no-cache fish
+RUN apk add --no-cache fish nano
 #nodeJS降级
 RUN npm install -g n && \
     # n 12.13.0 && \
@@ -30,6 +32,7 @@ RUN cnpm install apidoc -g  \
 #    && npm install \
 #    && npm run init
 
+USER node
 VOLUME ["/home/node"]
 EXPOSE 8080 443
 WORKDIR /home/node
@@ -43,4 +46,3 @@ WORKDIR /home/node
 #ENTRYPOINT ["/startapp.sh"]
 #容器启动时执行指令
 # CMD /bin/fish
-
