@@ -2,21 +2,32 @@
 # for pi0 use this
 #FROM arm32v6/node:current-alpine
 # for x86 & x64
-FROM node:current-alpine
+FROM node:12.13-alpine
 #维护者信息 dr
 #镜像的操作指令
 # RUN apt-get update
 RUN echo "http://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories
 RUN apk update && apk upgrade
-RUN apk add --no-cache fish nano
+RUN apk add --no-cache fish nano bash
 #nodeJS降级
-RUN npm install -g n && \
-    # n 12.13.0 && \
-    npm install cnpm -g
+RUN npm install n -g --registry=https://registry.npm.taobao.org \
+    # && n 12.13.0 \    
+    && npm install -g cnpm --registry=https://registry.npm.taobao.org 
+    
 # eggjs 脚本执行
 RUN cnpm install apidoc -g  \
     && cnpm install gulp -g  \
     && cnpm install egg-scripts -g 
+
+# 设置 inotifywait 或 inotifywatch 命令可以监视的文件数量
+# RUN echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf \ 
+#     && sysctl -p
+
+# sharp.npm安装
+# RUN apk add python3 \
+#     && npm config set sharp_binary_host "https://npm.taobao.org/mirrors/sharp" \
+#     && npm config set sharp_libvips_binary_host "https://npm.taobao.org/mirrors/sharp-libvips" 
+    # && npm install sharp
 
 #下载
 # RUN cd /home \
@@ -32,7 +43,7 @@ RUN cnpm install apidoc -g  \
 #    && npm install \
 #    && npm run init
 
-USER node
+# USER node
 VOLUME ["/home/node"]
 EXPOSE 8080 443
 WORKDIR /home/node
