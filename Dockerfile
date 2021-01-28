@@ -15,9 +15,9 @@ RUN npm install n -g --registry=https://registry.npm.taobao.org \
     && npm install -g cnpm --registry=https://registry.npm.taobao.org 
     
 # eggjs 脚本执行
-RUN cnpm install apidoc -g  \
-    && cnpm install gulp -g  \
-    && cnpm install egg-scripts -g 
+# RUN cnpm install apidoc -g  \
+#     && cnpm install gulp -g  \
+#     && cnpm install egg-scripts -g 
 
 # 设置 inotifywait 或 inotifywatch 命令可以监视的文件数量
 # RUN echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf \ 
@@ -43,7 +43,7 @@ RUN cnpm install apidoc -g  \
 #    && npm install \
 #    && npm run init
 
-# USER node
+USER node
 VOLUME ["/home/node"]
 EXPOSE 8080 443
 WORKDIR /home/node
