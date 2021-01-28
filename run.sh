@@ -1,9 +1,9 @@
 #!/bin/bash
-docker stop dora
-docker rm dora
+docker stop ncm.node
+docker rm ncm.node
 echo $HOME
-docker run -it  \
--p 8084:8080 -p 8900:8900 -p 8899:8899 -p 8888:8888 -p 9229:9229 -p 9999:9999 -p 5800:5800 -p 9230:9230 \
---name=dora --network=nginxNet \
--v $HOME/node:/home/node --restart=always node:dora fish
+docker run -d  \
+--name=ncm.node --network=nginxNet \
+--restart=always binaryify/netease_cloud_music_api
 
+#-v $HOME/workspace/NetEaseCloudMusicApi:/home/node
