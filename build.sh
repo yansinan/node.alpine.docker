@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t node:base .
+docker build -t node:ncm -f ./Dockerfile ..

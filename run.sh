@@ -4,6 +4,7 @@ docker rm ncm.node
 echo $HOME
 docker run -d  \
 --name=ncm.node --network=nginxNet \
+-p 3000:3000 \
 --restart=always binaryify/netease_cloud_music_api
 
 #-v $HOME/workspace/NetEaseCloudMusicApi:/home/node
