@@ -6,7 +6,7 @@ FROM node:12.13-alpine
 #维护者信息 dr
 #镜像的操作指令
 # RUN apt-get update
-RUN echo "http://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories
+# RUN echo "http://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories
 RUN apk update && apk upgrade
 RUN apk add --no-cache fish nano bash
 #nodeJS降级
