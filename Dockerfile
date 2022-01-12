@@ -15,6 +15,7 @@ RUN npm install n -g --registry=https://registry.npm.taobao.org \
     && npm install -g cnpm --registry=https://registry.npm.taobao.org 
     
 # eggjs 脚本执行
+# RUN npm i egg-init -g --registry=https://registry.npm.taobao.org
 # RUN cnpm install apidoc -g  \
 #     && cnpm install gulp -g  \
 #     && cnpm install egg-scripts -g 
@@ -50,10 +51,17 @@ WORKDIR /home/node
 
 # COPY startapp.sh /startapp.sh
 # RUN chmod +x /startapp.sh
+# eggjs初始化
+# RUN cd ~ \
+#    && npm init egg -r=https://registry.npm.taobao.org --type=simple
 
-
-
-
-#ENTRYPOINT ["/startapp.sh"]
+COPY frpc /usr/sbin/frpc/frpc
+COPY frpc.ini /usr/sbin/frpc/frpc.ini
+RUN chmod +x ~/entrypoint.sh
+COPY entrypoint.sh ~/entrypoint.sh
+RUN chmod +x ~/entrypoint.sh
+ENTRYPOINT ["sh ./entrypoint.sh"]
 #容器启动时执行指令
 # CMD /bin/fish
+# build命令
+# docker build -t node:eggjs .
