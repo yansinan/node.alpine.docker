@@ -9,6 +9,12 @@ FROM node:12.13-alpine
 # RUN echo "http://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories
 RUN apk update && apk upgrade
 RUN apk add --no-cache fish nano bash
+# 修改时区
+RUN apk add tzdata && \
+    cp /usr/share//zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone && \
+    apk del tzdata
+
 #nodeJS降级
 RUN npm install n -g --registry=https://registry.npm.taobao.org \
     # && n 12.13.0 \    
