@@ -7,8 +7,10 @@ FROM node:12.13-alpine
 #镜像的操作指令
 # RUN apt-get update
 # RUN echo "http://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+
 RUN apk update && apk upgrade
-RUN apk add --no-cache fish nano bash
+RUN apk add --no-cache fish nano bash wget
 # 修改时区
 RUN apk add tzdata && \
     cp /usr/share//zoneinfo/Asia/Shanghai /etc/localtime && \
@@ -19,7 +21,13 @@ RUN apk add tzdata && \
 RUN npm install n -g --registry=https://registry.npm.taobao.org \
     # && n 12.13.0 \    
     && npm install -g cnpm --registry=https://registry.npm.taobao.org 
-    
+
+#添加bash_profile
+RUN echo "" > .bashrc 
+
+# #eggjs初始化
+# RUN npm init egg --type=simple \
+#     && npm init egg --type=simple
 # eggjs 脚本执行
 # RUN cnpm install apidoc -g  \
 #     && cnpm install gulp -g  \
