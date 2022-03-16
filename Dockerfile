@@ -48,19 +48,21 @@ RUN rm -rf /var/cache/apk/*
 #     && tnvm use alinode-v7.4.0 \
 #     && npm install @alicloud/agenthub -g  --registry=https://registry.npm.taobao.org
     
+#20220316：alnode用root安装node，导致权限问题；临时使用：修改了权限
+#Your cache folder contains root-owned files, due to a bug in npm ; previous versions of npm which has since been addressed.
+RUN chown 1000:1000 "/root" \
+    && chown -R 1000:1000 "/root/.npm" \
+    && chown -R 1000:1000 "/usr/local"
+
+USER node
 #nodeJS降级
-RUN npm install n -g --registry=https://registry.npm.taobao.org \
-    # && n 12.13.0 \    
-    && npm install -g cnpm --registry=https://registry.npm.taobao.org 
+RUN npm install -g cnpm --registry=https://registry.npm.taobao.org 
+# RUN npm install n -g --registry=https://registry.npm.taobao.org 
+    # && n 12.13.0 \
 
 
 # #eggjs初始化
-# RUN npm init egg --type=simple \
-#     && npm init egg --type=simple
-# eggjs 脚本执行
-# RUN cnpm install apidoc -g  \
-#     && cnpm install gulp -g  \
-#     && cnpm install egg-scripts -g 
+# RUN npm init egg --type=simple --registry=https://registry.npm.taobao.org --dir=/home/node
 
 # 设置 inotifywait 或 inotifywatch 命令可以监视的文件数量
 # RUN echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf \ 
@@ -86,10 +88,9 @@ RUN npm install n -g --registry=https://registry.npm.taobao.org \
 #    && npm install \
 #    && npm run init
 
-# USER node
 VOLUME ["/home/node"]
 EXPOSE 7001
-# WORKDIR /home/node
+WORKDIR /home/node
 
 # COPY startapp.sh /startapp.sh
 # RUN chmod +x /startapp.sh
