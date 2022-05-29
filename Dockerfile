@@ -44,7 +44,6 @@ RUN npm install n -g --registry=https://registry.npm.taobao.org \
 #    && npm install \
 #    && npm run init
 
-USER node
 VOLUME ["/home/node"]
 EXPOSE 8080 443
 WORKDIR /home/node
@@ -57,10 +56,12 @@ WORKDIR /home/node
 
 COPY frpc /usr/sbin/frpc/frpc
 COPY frpc.ini /usr/sbin/frpc/frpc.ini
-RUN chmod +x ~/entrypoint.sh
-COPY entrypoint.sh ~/entrypoint.sh
-RUN chmod +x ~/entrypoint.sh
-ENTRYPOINT ["sh ./entrypoint.sh"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["sh","/entrypoint.sh"]
+# ENTRYPOINT ["/usr/sbin/frpc/frpc","-c","/usr/sbin/frpc/frpc.ini","&"]
+USER node
 #容器启动时执行指令
 # CMD /bin/fish
 # build命令
