@@ -54,12 +54,15 @@ WORKDIR /home/node
 # RUN cd ~ \
 #    && npm init egg -r=https://registry.npm.taobao.org --type=simple
 
-COPY frpc /usr/sbin/frpc/frpc
-COPY frpc.ini /usr/sbin/frpc/frpc.ini
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# COPY frpc /usr/sbin/frpc/frpc
+# COPY frpc.ini /usr/sbin/frpc/frpc.ini
+# RUN ln -s frpc /usr/sbin/frpc/frpc
+# RUN ln -s frpc.ini /usr/sbin/frpc/frpc.ini
+# 入口文件启动frpc
+COPY entrypoint.sh /usr/sbin/frpc/entrypoint.sh
+RUN chmod +x /usr/sbin/frpc/entrypoint.sh
 
-ENTRYPOINT ["sh","/entrypoint.sh"]
+ENTRYPOINT ["sh","/usr/sbin/frpc/entrypoint.sh"]
 # ENTRYPOINT ["/usr/sbin/frpc/frpc","-c","/usr/sbin/frpc/frpc.ini","&"]
 USER node
 #容器启动时执行指令
