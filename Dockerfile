@@ -2,17 +2,23 @@
 # for pi0 use this
 #FROM arm32v6/node:current-alpine
 # for x86 & x64
-FROM node:12.13-alpine
+# FROM node:12.13-alpine
+FROM node:lts-alpine
 #维护者信息 dr
 #镜像的操作指令
 # RUN apt-get update
-RUN echo "http://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories
+# RUN echo "http://mirrors.aliyun.com/alpine/latest-stable/main/" > /etc/apk/repositories
 RUN apk update && apk upgrade
 RUN apk add --no-cache fish nano bash
+# 修改时区
+RUN apk add tzdata && \
+    cp /usr/share//zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone && \
+    apk del tzdata
 #nodeJS降级
 RUN npm install n -g --registry=https://registry.npm.taobao.org \
     # && n 12.13.0 \    
-    && npm install -g cnpm --registry=https://registry.npm.taobao.org 
+    && npm install -g cnpm@7.1.0 --registry=https://registry.npm.taobao.org
     
 # eggjs 脚本执行
 # RUN npm i egg-init -g --registry=https://registry.npm.taobao.org
