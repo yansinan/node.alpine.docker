@@ -4,6 +4,7 @@
 # for x86 & x64
 # FROM node:12.13-alpine
 FROM node:lts-alpine
+# FROM node:18.12.0-alpine3.16
 #维护者信息 dr
 #镜像的操作指令
 # RUN apt-get update
@@ -18,8 +19,11 @@ RUN apk add tzdata && \
 #nodeJS降级
 RUN npm install n -g --registry=https://registry.npm.taobao.org \
     # && n 12.13.0 \    
-    && npm install -g cnpm@7.1.0 --registry=https://registry.npm.taobao.org
-    
+    && npm install -g cnpm --registry=https://registry.npm.taobao.org
+#升级node 适配eggjs(node^16)
+# RUN export N_NODE_MIRROR=https://npmmirror.com/mirrors/node && \
+#     n lts_latest
+
 # eggjs 脚本执行
 # RUN npm i egg-init -g --registry=https://registry.npm.taobao.org
 # RUN cnpm install apidoc -g  \
