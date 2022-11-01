@@ -1,7 +1,7 @@
 #!/bin/bash
 # build命令
 # docker build -t node:cnpm .
-name=bilibiliForAmber
+name=eventsOfAmber
 
 docker stop $name
 docker rm $name
